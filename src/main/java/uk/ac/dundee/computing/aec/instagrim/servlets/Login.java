@@ -8,7 +8,6 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -51,24 +50,31 @@ public class Login extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         
-        User us=new User();
-        us.setCluster(cluster);
-        boolean isValid=us.IsValidUser(username, password);
-        HttpSession session=request.getSession();
-        System.out.println("Session in servlet "+session);
-        if (isValid){
-            LoggedIn lg= new LoggedIn();
-            lg.setLogedin();
-            lg.setUsername(username);
-            //request.setAttribute("LoggedIn", lg);
-            
-            session.setAttribute("LoggedIn", lg);
-            System.out.println("Session in servlet "+session);
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
-	    rd.forward(request,response);
-            
+        // Check if username or password field is empty
+        if (username.isEmpty() || password.isEmpty() )
+        {
+            response.sendRedirect("login.jsp");
         }else{
-            response.sendRedirect("/Instagrim/login.jsp");
+            User us=new User();
+            us.setCluster(cluster);
+            boolean isValid= us.IsValidUser(username, password);
+            HttpSession session= request.getSession();
+            System.out.println("Session in servlet "+session);
+            if (isValid){  
+                LoggedIn lg= new LoggedIn();
+                lg.setLogedin();
+                lg.setUsername(username);
+                //request.setAttribute("LoggedIn", lg);
+            
+                session.setAttribute("LoggedIn", lg);
+                System.out.println("Session in servlet "+session);
+                //RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+                //rd.forward(request,response);
+                response.sendRedirect("index.jsp");
+
+            }else{
+                response.sendRedirect("/Instagrim/login.jsp");
+            }
         }
         
     }
@@ -82,5 +88,4 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

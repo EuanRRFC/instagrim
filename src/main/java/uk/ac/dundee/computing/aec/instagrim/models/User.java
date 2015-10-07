@@ -37,15 +37,27 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password) Values(?,?)");
-       
-        BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword));
-        //We are assuming this always works.  Also a transaction would be good here !
+        PreparedStatement ps= session.prepare("select * from userprofiles where login =?");
         
-        return true;
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs= session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted())
+        {
+            //We are assuming this always works.  Also a transaction would be good here !
+            ps= session.prepare("insert into userprofiles (login,password) Values(?,?)");
+            boundStatement = new BoundStatement(ps);
+            session.execute( // this is where the query is executed
+                    boundStatement.bind( // here you are binding the 'boundStatement'
+                            username,EncodedPassword));
+            //We are assuming this always works.  Also a transaction would be good here !
+
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public boolean IsValidUser(String username, String Password){
@@ -65,7 +77,7 @@ public class User {
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         username));
         if (rs.isExhausted()) {
-            System.out.println("No Images returned");
+            System.out.println("Username not recognised");
             return false;
         } else {
             for (Row row : rs) {

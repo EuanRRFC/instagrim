@@ -16,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -25,14 +27,11 @@ import uk.ac.dundee.computing.aec.instagrim.models.User;
  */
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
-    Cluster cluster=null;
+    Cluster cluster= null;
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
     }
-
-
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -48,12 +47,24 @@ public class Register extends HttpServlet {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         
-        User us=new User();
-        us.setCluster(cluster);
-        us.RegisterUser(username, password);
-        
-	response.sendRedirect("/Instagrim");
-        
+        if (username.isEmpty() || password.isEmpty())
+        {
+            response.sendRedirect("register.jsp");
+        }else{
+            User us= new User();
+            us.setCluster(cluster);
+            boolean checkUN= us.RegisterUser(username, password);
+            if (checkUN){
+                HttpSession session= request.getSession(); // Creates Http session to allow auto login
+                LoggedIn lg= new LoggedIn();
+                lg.setLogedin();
+                lg.setUsername(username);
+                session.setAttribute("LoggedIn", lg);
+                response.sendRedirect("/Instagrim");
+            }else{
+                response.sendRedirect("register.jsp");
+            }
+        }
     }
 
     /**
