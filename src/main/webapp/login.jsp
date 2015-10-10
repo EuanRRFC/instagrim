@@ -5,42 +5,46 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
+    
     <body>
-        <header>
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
-        </header>
-        <nav>
-            <ul>
-                
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
+        
+        <nav id="navbar" class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                     <ul id="tabs" class="nav nav-tabs">
+                         <li role="presentation" class="active"><a href="/Instagrim">Home</a></li>
+                         <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                         <li><a href="register.jsp">Register</a></li>
+                     </ul>
+                </div>
         </nav>
        
-        <article>
-            <h3>Login</h3>
-            <form method="POST"  action="Login">
-                <ul>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
-                </ul>
-                <br/>
-                <input type="submit" value="Login"> 
-            </form>
-
-        </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
+       
+            <div id="loginPage" class="jumbotron">
+                <div class="container">
+                    <h1>Login</h1>
+                    <form method="POST"  action="Login">
+                        <ul>
+                            <li style="list-style-type: none;">User Name</li>
+                            <li style="list-style-type: none;"><input type="text" name="username"></li>
+                            <li style="list-style-type: none;">Password</li>
+                            <li style="list-style-type: none;"><input type="password" name="password"></li>
+                            <button <input type="submit" id="logInBtn" type="button" class="btn btn-default">Log In</button>
+<!--                        <input type="submit" value="Login"> -->
+                         </ul>
+                        <br/>
+                    </form>
+                </div>
+            </div>
+        
     </body>
 </html>
