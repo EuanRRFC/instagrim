@@ -4,17 +4,16 @@
     Author     : Administrator
 --%>
 
-<%@page import="java.util.*"%>
+<%@page import="java.util.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
 <!DOCTYPE html>
 <html>
     <head>
-        
         <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/Instagrim/Bootstrap/bootstrap.css" />
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
+        <link rel="stylesheet" type="text/css" href="/Instagrim/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     
@@ -22,15 +21,25 @@
         <nav id="navbar" class="navbar navbar-default navbar-static-top">
                 <div class="container">
                      <ul id="tabs" class="nav nav-tabs">
-                         <li role="presentation" class="active"><a href="/Instagrim/index.jsp">Home</a></li>
+                         <li><a href="/Instagrim">Home</a></li>
                          <li><a href="/Instagrim/upload.jsp">Upload</a></li>
                          <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                         <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
+                                 <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>
+<!--                         <button <input type="submit" id="logBtn" type="button">
+                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"</span>Logout</button>-->
                     </ul>
                 </div>
        </nav>
  
         <article>
-            <h1>Your Pics</h1>
+            <div id="profileInfo" class="container">
+                <% LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+                   session.setAttribute("UserName", lg.getUsername());
+                   session.setAttribute("fName", lg.getFName());%>
+            <h1>${UserName}</h1>
+            <h2>${fName}</h2>
+            </div>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
             if (lsPics == null) {

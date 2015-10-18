@@ -10,32 +10,35 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
+        <link rel="stylesheet" type="text/css" href="/Instagrim/Bootstrap/bootstrap.css" />
+        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <h1>InstaGrim ! </h1>
-        <h2>Upload your photos here</h2>
-        <nav>
-            <ul>
-                <li class="nav"><a href="upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
+      
+        <nav id="navbar" class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <ul id="tabs" class="nav nav-tabs">
+                    <li><a href="index.jsp">Home</a></li>
+                    <li><a href="upload.jsp">Upload</a></li>
+                    <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                </ul>
+            </div>
         </nav>
- 
-        <article>
-            <h3>File Upload</h3>
-            <form method="POST" enctype="multipart/form-data" action="Image">
+         <div id="uploadFormBody" class="jumbotron">
+                <div class="container">
+                     <h1>InstaGrim ! </h1>
+                     <h2>Upload your photos here</h2>
+                </div>
+         </div>
+            <div class="container">
+            <form id="uploadForm" method="POST" enctype="multipart/form-data" action="Image">
                 File to upload: <input type="file" name="upfile"><br/>
 
                 <br/>
-                <input type="submit" value="Press"> to upload the file!
+                <a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>
+                <!--<input type="submit" value="Press"> to upload the file!-->
+                </div>
             </form>
-
-        </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
     </body>
 </html>

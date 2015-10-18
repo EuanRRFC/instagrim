@@ -30,6 +30,7 @@ public class Login extends HttpServlet {
     Cluster cluster=null;
 
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -70,7 +71,7 @@ public class Login extends HttpServlet {
                 System.out.println("Session in servlet "+session);
                 //RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
                 //rd.forward(request,response);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
 
             }else{
                 response.sendRedirect("/Instagrim/login.jsp");

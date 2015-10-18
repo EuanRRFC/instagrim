@@ -46,23 +46,35 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
+        String checkPassword=request.getParameter("password2");
+        String email=request.getParameter("email");
+        String fName=request.getParameter("fName");
+        String sName=request.getParameter("sName");
         
-        if (username.isEmpty() || password.isEmpty())
+            if (username.isEmpty() || password.isEmpty() || checkPassword.isEmpty() || email.isEmpty() || fName.isEmpty() || sName.isEmpty())
         {
             response.sendRedirect("register.jsp");
         }else{
-            User us= new User();
-            us.setCluster(cluster);
-            boolean checkUN= us.RegisterUser(username, password);
-            if (checkUN){
-                HttpSession session= request.getSession(); // Creates Http session to allow auto login
-                LoggedIn lg= new LoggedIn();
-                lg.setLogedin();
-                lg.setUsername(username);
-                session.setAttribute("LoggedIn", lg);
-                response.sendRedirect("/Instagrim");
-            }else{
-                response.sendRedirect("register.jsp");
+                if (password.equals(checkPassword)){     // Check if passwords match or not
+           
+                    User us= new User();
+                us.setCluster(cluster);
+                boolean checkUN= us.RegisterUser(username, password, email, fName, sName);
+                if (checkUN){
+                    HttpSession session= request.getSession(); // Creates Http session to allow auto login
+                    LoggedIn lg= new LoggedIn();
+                    lg.setLogedin();
+                    lg.setUsername(username);
+                    lg.setFName(fName);
+                    session.setAttribute("LoggedIn", lg);
+                    response.sendRedirect("/Instagrim");
+                }else{
+
+                    response.sendRedirect("register.jsp");
+                }
+                }else{
+                    System.out.println("Passwords didn't match");
+                    response.sendRedirect("register.jsp");
             }
         }
     }

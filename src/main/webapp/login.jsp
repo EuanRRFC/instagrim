@@ -10,9 +10,9 @@
 <html>
     <head>
         <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/Instagrim/Bootstrap/bootstrap.css" />
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     
@@ -22,7 +22,6 @@
                 <div class="container">
                      <ul id="tabs" class="nav nav-tabs">
                          <li role="presentation" class="active"><a href="/Instagrim">Home</a></li>
-                         <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
                          <li><a href="register.jsp">Register</a></li>
                      </ul>
                 </div>

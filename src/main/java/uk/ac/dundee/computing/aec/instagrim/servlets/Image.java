@@ -1,6 +1,7 @@
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -97,10 +98,13 @@ public class Image extends HttpServlet {
     private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
+//        HttpSession session = request.getSession();
         java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(User);
         RequestDispatcher rd = request.getRequestDispatcher("/UsersPics.jsp");
         request.setAttribute("Pics", lsPics);
+//        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
         rd.forward(request, response);
+//        response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
 
     }
 

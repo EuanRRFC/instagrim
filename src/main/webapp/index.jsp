@@ -11,9 +11,10 @@
 <html>
     <head>
         <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="/Instagrim/Bootstrap/bootstrap.css" />
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" type="text/css" href="Styles.css" />
+        
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
@@ -35,15 +36,11 @@
                 <li role="presentation"><a href="upload.jsp">Upload</a></li>
                 <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">Logout</a></li>
                     <%}
-                            }else{
-                                %>
+                        }else{%>
                  <li role="presentation" class="active"><a href="/Instagrim">Home</a></li>
                  <li><a href="register.jsp">Register</a></li>
                  <li id="logBtn"><a href="login.jsp">Login</a></li>
-                <%
-                                        
-                            
-                    }%>
+                <%}%>
             </ul>
                 </div>
         </nav>
@@ -52,7 +49,7 @@
                     <h1>InstaGrim</h1>
                     <h2>Cats, food and memes in black & white</h2>
                     <a href="register.jsp"><button id="signup" type="button" class="btn btn-default">Sign Up</button></a>
-                </div>
+                    </div>
             </div>
     </body>
 </html>

@@ -62,11 +62,24 @@ body{
 {
     text-align: center;
     position: relative;
-    margin-top: 25%;
+    margin-top: 15%;
     font-family: 'Inconsolata';
     font-size: 40px;
     padding: 10px 20px 10px 20px;
     color: white;
+    background-color: transparent;
+}
+
+#registerBtn
+{
+    text-align: center;
+    position: relative;
+    margin-top: 0%;
+    font-family: 'Inconsolata';
+    font-size: 40px;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    background-color: transparent;
 }
 
 #logInBtn
@@ -84,15 +97,84 @@ body{
 {
     margin-top: 5%;
     font-family: 'Inconsolata';
-    font-size: 40px;
-    /*color: white;*/
+    font-size: 25px;
+    color: white;
+    list-style-type: none;
+    text-align: center;
 }
 
 // Aligns Login & Logout button to right side of page
 #logBtn
 {
     position: relative;
+    float: right;   
+}
+
+#registerTabs
+{
+    display: inline-block;
     float: right;
+    clear: right;
+    width: 50%;
+    text-align: right;
+    color: white;
+}
+
+#registerTabs2
+{
+    display: inline-block;
+    float: right;
+    clear: right;
+    width: 50%;
+    text-align: left;
+    color: black;
+}
+
+#uploadForm
+{
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 30px;
+}
+
+#uploadFormBody
+{
+    background: url("http://i.imgur.com/AmWThvw.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 33%;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    color: white;
+    margin-bottom: 0;
+}
+
+#uploadBtn
+{
+    text-align: center;
+    position: relative;
+    margin-top: 0%;
+    font-family: 'Inconsolata';
+    font-size: 40px;
+    padding: 10px 20px 10px 20px;
+    color: white;
+}
+
+#profileImages
+{
+    text-align: center;
+}
+
+#profileInfo
+{
+    text-align: left;
+    font-family: 'Inconsolata';
+    color: white;
 }
 .btn{
     background-color: transparent;
