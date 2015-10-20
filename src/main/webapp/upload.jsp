@@ -21,7 +21,6 @@
                 <ul id="tabs" class="nav nav-tabs">
                     <li><a href="index.jsp">Home</a></li>
                     <li><a href="upload.jsp">Upload</a></li>
-                    <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
                 </ul>
             </div>
         </nav>
@@ -36,8 +35,8 @@
                 File to upload: <input type="file" name="upfile"><br/>
 
                 <br/>
-                <a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>
-                <!--<input type="submit" value="Press"> to upload the file!-->
+                <!--<a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>-->
+                <input type="submit" value="Press"> to upload the file!
                 </div>
             </form>
     </body>

@@ -23,7 +23,6 @@
                      <ul id="tabs" class="nav nav-tabs">
                          <li><a href="/Instagrim">Home</a></li>
                          <li><a href="/Instagrim/upload.jsp">Upload</a></li>
-                         <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
                          <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
                                  <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>
 <!--                         <button <input type="submit" id="logBtn" type="button">
@@ -59,6 +58,25 @@
             }
         %>
         </article>
+         <div class="container">
+            <form id="uploadForm" method="POST" enctype="multipart/form-data" action="Image">
+                File to upload: <input type="file" name="upfile"><br/>
+
+                <br/>
+                <!--<a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>-->
+                <input type="submit" value="Press"> to upload the file!
+            
+            </form>
+         </div>
+        <div class="container">
+            <form id="uploadForm" method="POST" enctype="multipart/form-data" action="ProfileImage">
+                Profile picture to upload: <input type="file" name="upfile"><br/>
+
+                <br/>
+                <a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>
+                <input type="submit" value="Press"> to upload the file!
+            </form>
+        </div>
        
     </body>
 </html>
