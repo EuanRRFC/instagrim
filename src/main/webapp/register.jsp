@@ -45,6 +45,7 @@
                         <li id="registerTabs" style="list-style: none">Email <input id="registerTabs2" type="email" name="email"></li>
                         <li id="registerTabs" style="list-style: none">First Name <input id="registerTabs2" type="fName" name="fName"></li>
                         <li id="registerTabs" style="list-style: none">Last Name <input id="registerTabs2" type="sName" name="sName"></li>
+<!--                        <li id="registerTabs" style="list-style: none">Profile Picture <input id="registerTabs2" type="file" name="upfile"></li>-->
                     </ul>
                     <br/>
                     <button <input type="submit" id="registerBtn" type="button" class="btn btn-default">Sign Up</button>

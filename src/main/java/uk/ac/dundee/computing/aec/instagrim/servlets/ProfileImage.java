@@ -19,26 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
+import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
  * Servlet implementation class Image
  */
-@WebServlet(urlPatterns = {
-    "/Image",
-    "/Image/*",
-    "/Thumb/*",
-    "/Images",
-    "/Images/*"
-})
+@WebServlet(urlPatterns = {"/ProfileImage"})
 @MultipartConfig
 
 public class ProfileImage extends HttpServlet {
@@ -46,6 +37,7 @@ public class ProfileImage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Cluster cluster;
     private HashMap CommandsMap = new HashMap();
+    private String User;
     
     
 
@@ -82,51 +74,23 @@ public class ProfileImage extends HttpServlet {
         }
         switch (command) {
             case 1:
-                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
-                break;
-            case 2:
-                DisplayImageList(args[2], request, response);
-                break;
-            case 3:
-                DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
+                DisplayProfile(request, response);
                 break;
             default:
                 error("Bad Operator", response);
         }
     }
 
-    private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   protected void DisplayProfile(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        System.out.println("We're in display profile");
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
-//        HttpSession session = request.getSession();
-        java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(User);
-        RequestDispatcher rd = request.getRequestDispatcher("/UsersPics.jsp");
+        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
+        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
         request.setAttribute("Pics", lsPics);
-//        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
         rd.forward(request, response);
-//        response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
-
-    }
-
-    private void DisplayImage(int type,String Image, HttpServletResponse response) throws ServletException, IOException {
-        PicModel tm = new PicModel();
-        tm.setCluster(cluster);
-  
-        
-        Pic p = tm.getPic(type,java.util.UUID.fromString(Image));
-        
-        OutputStream out = response.getOutputStream();
-
-        response.setContentType(p.getType());
-        response.setContentLength(p.getLength());
-        //out.write(Image);
-        InputStream is = new ByteArrayInputStream(p.getBytes());
-        BufferedInputStream input = new BufferedInputStream(is);
-        byte[] buffer = new byte[8192];
-        for (int length = 0; (length = input.read(buffer)) > 0;) {
-            out.write(buffer, 0, length);
-        }
-        out.close();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -154,8 +118,7 @@ public class ProfileImage extends HttpServlet {
 
                 is.close();
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
-             rd.forward(request, response);
+             response.sendRedirect("/Instagrim/profile.jsp");
         }
 
     }

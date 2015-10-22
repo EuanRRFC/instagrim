@@ -15,6 +15,7 @@
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" type="text/css" href="/Instagrim/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <%ProfileAvatarBean pab = (ProfileAvatarBean) session.getAttribute("ProfileAvatarBean");%>
     </head>
     
     <body>
@@ -40,40 +41,42 @@
             <h2>${fName}</h2>
             </div>
         <%
-            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-            if (lsPics == null) {
+//            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
+//            if (lsPics == null) {
         %>
-        <p>No Pictures found</p>
+        <!--<p>No Pictures found</p>-->
         <%
-        } else {
-            Iterator<Pic> iterator;
-            iterator = lsPics.iterator();
-            while (iterator.hasNext()) {
-                Pic p = (Pic) iterator.next();
+//        } else {
+//            Iterator<Pic> iterator;
+//            iterator = lsPics.iterator();
+//            while (iterator.hasNext()) {
+//                Pic p = (Pic) iterator.next();
 
-        %>
-        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+//        %>
+        <a href="/Instagrim/Image/<%=pab.getAvatar().getSUUID()%>"><img id="avatarImg" class="img-circle" src="/Instagrim/Thumb/<%=pab.getAvatar().getSUUID()%> "></a>
+        <!--<a href="/Instagrim/Image/<%= //p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%= //p.getSUUID()%>"></a><br/>-->
+        <%
 
             }
             }
         %>
         </article>
-         <div class="container">
+<!--         <div class="container">
             <form id="uploadForm" method="POST" enctype="multipart/form-data" action="Image">
                 File to upload: <input type="file" name="upfile"><br/>
 
                 <br/>
-                <!--<a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>-->
+                <a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>
                 <input type="submit" value="Press"> to upload the file!
             
             </form>
-         </div>
+         </div>-->
         <div class="container">
-            <form id="uploadForm" method="POST" enctype="multipart/form-data" action="ProfileImage">
-                Profile picture to upload: <input type="file" name="upfile"><br/>
-
+            <form id="uploadForm" method="POST" enctype="multipart/form-data" action="Image">
+                Image picture to upload: <input type="file" name="upfile"><br/>
+    
                 <br/>
-                <a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>
+                <!--<a href=""<button id="uploadBtn" type="submit" class="btn btn-default">Upload</button>-->
                 <input type="submit" value="Press"> to upload the file!
             </form>
         </div>

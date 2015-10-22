@@ -176,6 +176,20 @@ body{
     font-family: 'Inconsolata';
     color: white;
 }
+
+#profileUpload
+{
+    text-align: center;
+    font-family: 'Inconsolata';
+    color: white;
+    display: inline-block;
+    float: right;
+    clear: right;
+    width: 50%;
+    text-align: left;
+    color: black;
+    
+}
 .btn{
     background-color: transparent;
     /*border: none;*/

@@ -70,7 +70,10 @@ public class Login extends HttpServlet {
                 System.out.println("Session in servlet "+session);
                 //RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
                 //rd.forward(request,response);
-                response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
+//                response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
+                ProfileImage pi = new ProfileImage();
+                //pi.DisplayProfile(request, response);
+                response.sendRedirect("/Instagrim/profile.jsp");
 
             }else{
                 response.sendRedirect("/Instagrim/login.jsp");

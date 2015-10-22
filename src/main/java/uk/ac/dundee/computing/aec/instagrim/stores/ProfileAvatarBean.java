@@ -5,29 +5,61 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.stores;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Euan
  */
 @WebServlet(name = "ProfileAvatar", urlPatterns = {"/ProfileAvatar"})
-public class ProfileAvatarBean extends HttpServlet {
-    private Pic avatar = null;
+public class ProfileAvatarBean {
+    private String fName= null;
+    private String sName= null;
+    private String email= null;
+    private String profilePicID= null;
     
-    public void setAvatar(Pic profile)
-    {
-        this.avatar=profile;
+    public void ProfileAvatarBean(){
+        
     }
     
-    public Pic getAvatar()
+    public void setFName(String fName)
     {
-        return avatar;
+        this.fName= fName;
+    }
+    
+    public void setSName(String sName)
+    {
+        this.sName= sName;
+    }
+    
+    public void setEmail(String email)
+    {
+        this.email= email;
+    }
+
+    
+    public void setAvatar(String profilePic)
+    {
+        this.profilePicID= profilePic;
+    }
+    
+    public String getFName()
+    {
+        return fName;
+    }
+    
+    public String getSName()
+    {
+        return sName;
+    }
+    
+    public String getEmail()
+    {
+        return email;
+    }
+    
+    public String getAvatar()
+    {
+        return this.profilePicID;
     }
 }

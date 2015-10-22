@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
+import uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean;
 
 /**
  *
@@ -47,7 +48,7 @@ public class User {
         if (rs.isExhausted())
         {
             //We are assuming this always works.  Also a transaction would be good here !
-            ps= session.prepare("insert into userprofiles (login,password,email,first_name,last_name) Values(?,?,?,?,?)");
+            ps= session.prepare("insert into userprofiles (login,password,email,first_name,last_name,profilePic) Values(?,?,?,?,?,?)");
             boundStatement = new BoundStatement(ps);
             session.execute( // this is where the query is executed
                     boundStatement.bind( // here you are binding the 'boundStatement'
@@ -99,6 +100,17 @@ public class User {
        public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
-
+ protected ProfileAvatarBean DisplayProfile(String username)
+    {
+        System.out.println("We're in display profile");
+        PicModel tm = new PicModel();
+        tm.setCluster(cluster);
+        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
+        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
+        request.setAttribute("Pics", lsPics);
+        rd.forward(request, response);
+        
+        //select all from it & update strings.
+    }
     
 }

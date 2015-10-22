@@ -5,20 +5,47 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.stores;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.datastax.driver.core.utils.Bytes;
+import java.nio.ByteBuffer;
 /**
  *
  * @author Euan
  */
-@WebServlet(name = "Avatar", urlPatterns = {"/Avatar"})
-public class Avatar extends HttpServlet {
-
+public class Avatar {
+    private ByteBuffer bImage = null;
+    private int length;
+    private String type;
+    private java.util.UUID UUID=null;
     
+    public void Avatar() {
+
+    }
+    public void setUUID(java.util.UUID UUID){
+        this.UUID =UUID;
+    }
+    public String getSUUID(){
+        return UUID.toString();
+    }
+    public void setPic(ByteBuffer bImage, int length,String type){
+        this.bImage= bImage;
+        this.length= length;
+        this.type=type;
+    }
+
+    public ByteBuffer getBuffer(){
+        return bImage;
+    }
+
+    public int getLength(){
+        return length;
+    }
+    
+    public String getType(){
+        return type;
+    }
+
+    public byte[] getBytes(){
+        byte image[] = Bytes.getArray(bImage);
+        return image;
+    }
  }
