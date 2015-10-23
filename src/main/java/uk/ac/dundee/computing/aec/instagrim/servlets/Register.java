@@ -65,7 +65,6 @@ public class Register extends HttpServlet {
                     LoggedIn lg= new LoggedIn();
                     lg.setLogedin();
                     lg.setUsername(username);
-                    lg.setFName(fName);
                     session.setAttribute("LoggedIn", lg);
                     response.sendRedirect("/Instagrim");
                 }else{

@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.Avatar;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean;
 
 /**
  *
@@ -67,19 +69,19 @@ public class Login extends HttpServlet {
                 lg.setUsername(username);
             
                 session.setAttribute("LoggedIn", lg);
-                System.out.println("Session in servlet "+session);
-                //RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
-                //rd.forward(request,response);
-//                response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
-                ProfileImage pi = new ProfileImage();
-                //pi.DisplayProfile(request, response);
-                response.sendRedirect("/Instagrim/profile.jsp");
-
+                ProfileAvatarBean pab = new ProfileAvatarBean();
+                Avatar av = new Avatar();
+                
+                pab = us.getProfile(pab, username, av);
+                
+                session.setAttribute("ProfileAvatarBean", pab);
+                session.setAttribute("Avatar", pab.getAvatar());
+                session.setAttribute("uploadProfile", null);
+                response.sendRedirect("/Instagrim");
             }else{
                 response.sendRedirect("/Instagrim/login.jsp");
             }
         }
-        
     }
 
     /**

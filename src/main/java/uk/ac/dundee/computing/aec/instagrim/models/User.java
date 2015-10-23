@@ -14,7 +14,9 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import javax.servlet.RequestDispatcher;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
+import uk.ac.dundee.computing.aec.instagrim.stores.Avatar;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 import uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean;
 
@@ -94,23 +96,55 @@ public class User {
     return false;  
     }
     
+    public ProfileAvatarBean getProfile(ProfileAvatarBean pab, String user, Avatar av)
+    {
+        Session session= cluster.connect("instagrim");
+        PreparedStatement ps= session.prepare("select * from userprofiles where login=?");
+        ResultSet rs= null;
+        ResultSet rs1= null;
+        BoundStatement bs= new BoundStatement(ps);
+        rs= session.execute(bs.bind(user));
+        ps= session.prepare("select image,imagelength,type from pics where picid =?");
+        bs= new BoundStatement(ps);
+        for(Row row : rs){
+            if(row.getUUID("profilepic")!= null){
+                rs1= session.execute(bs.bind(row.getUUID("profilepic")));
+            }
+            pab.setFName(row.getString("first_name"));
+            pab.setSName(row.getString("last_name"));
+            pab.setEmail(row.getString("email"));
+            if(rs1.isExhausted())
+            {}
+            else
+            {
+            for(Row row1 : rs1)
+            {
+                av.setPic(row1.getBytes("image"), row1.getInt("imageLength"), row1.getString("type"));
+                av.setUUID(row.getUUID("profilepic"));
+                pab.setAvatar(av);
+                }
+        }
+    }
+        return pab;
+    }
+    
     public boolean userExist(String username){
      return true;
     }
        public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
- protected ProfileAvatarBean DisplayProfile(String username)
-    {
-        System.out.println("We're in display profile");
-        PicModel tm = new PicModel();
-        tm.setCluster(cluster);
-        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
-        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
-        request.setAttribute("Pics", lsPics);
-        rd.forward(request, response);
-        
-        //select all from it & update strings.
-    }
+// protected ProfileAvatarBean DisplayProfile(String username)
+//    {
+//        System.out.println("We're in display profile");
+//        PicModel tm = new PicModel();
+//        tm.setCluster(cluster);
+//        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
+//        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
+//        request.setAttribute("Pics", lsPics);
+//        rd.forward(request, response);
+//        
+//        //select all from it & update strings.
+//    }
     
 }

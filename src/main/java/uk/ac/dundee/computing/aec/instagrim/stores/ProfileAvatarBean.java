@@ -16,7 +16,9 @@ public class ProfileAvatarBean {
     private String fName= null;
     private String sName= null;
     private String email= null;
-    private String profilePicID= null;
+    //private String profilePicID= null;
+    private Avatar avatar= null; // new
+
     
     public void ProfileAvatarBean(){
         
@@ -37,10 +39,13 @@ public class ProfileAvatarBean {
         this.email= email;
     }
 
-    
-    public void setAvatar(String profilePic)
+//    public void setAvatar(String profilePic)
+//    {
+//        this.profilePicID= profilePic;
+//    }
+    public void setAvatar(Avatar avatar)
     {
-        this.profilePicID= profilePic;
+        this.avatar=avatar;
     }
     
     public String getFName()
@@ -58,8 +63,12 @@ public class ProfileAvatarBean {
         return email;
     }
     
-    public String getAvatar()
+//    public String getAvatar()
+//    {
+//       return this.profilePicID; 
+//    }
+    public Avatar getAvatar()
     {
-        return this.profilePicID;
+        return avatar;
     }
 }

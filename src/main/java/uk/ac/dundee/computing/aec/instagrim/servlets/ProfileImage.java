@@ -84,7 +84,7 @@ public class ProfileImage extends HttpServlet {
    protected void DisplayProfile(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        System.out.println("We're in display profile");
+//        System.out.println("We're in display profile");
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
         java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
@@ -99,6 +99,7 @@ public class ProfileImage extends HttpServlet {
 
             String type = part.getContentType();
             String filename = part.getSubmittedFileName();
+            //String profilePicId = part.getSubmittedFileName();
             
             InputStream is = request.getPart(part.getName()).getInputStream();
             int i = is.available();
@@ -114,8 +115,9 @@ public class ProfileImage extends HttpServlet {
                 System.out.println("Length : " + b.length);
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
+                System.out.println("Inserting to database");
                 tm.insertProfilePic(b, type, filename, username);
-
+                
                 is.close();
             }
              response.sendRedirect("/Instagrim/profile.jsp");

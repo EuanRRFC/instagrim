@@ -2,12 +2,12 @@
     Document   : profile
     Created on : 21-Oct-2015, 12:12:09
     Author     : Euan
---%>
+--%><%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*"%>
 
-<%@page import="java.util.Iterator"%>
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.Pic"%>
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn"%>
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.Avatar"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn" %>
 <%@page import="java.util.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,8 +19,8 @@
         <link rel="stylesheet" type="text/css" href="/Instagrim/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        ProfileAvatarBean pab = (ProfileAvatarBean) session.getAttribute("ProfileAvatarBean");
         session.setAttribute("username", lg.getUsername());
-        session.setAttribute("fName", lg.getFName());
 //        ProfileAvatarBean pab = (ProfileAvatarBean) session.getAttribute("ProfileAvatarBean");%>
     </head>
     <body>
@@ -29,6 +29,8 @@
                      <ul id="tabs" class="nav nav-tabs">
                          <li><a href="/Instagrim">Home</a></li>
                          <li><a href="/Instagrim/upload.jsp">Upload</a></li>
+                         <li><a href="/Instagrim/updateProfile.jsp">Update Profile</a></li>
+                         <!--<li role="presentation"><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>-->
                          <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
                                  <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>
 <!--                         <button <input type="submit" id="logBtn" type="button">
@@ -41,37 +43,40 @@
             <div id="profileInfo" class="container">
             <h1>${username}</h1>
             <h2>${fName}</h2>
+         
             </div>
-            <img src="Instagrim/thumb/"$(ProfileAvatarBean.getAvatar());>
+            
             <article>
             <div id="profileInfo" class="container">
-                <h3>Your pics</h3>
-                <%
-                    java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-                    if (lsPics == null) {
-                %>
-                <p>No Pictures found here</p>
-                <%
-                } else {
-                    Iterator<Pic> iterator;
-                    iterator = lsPics.iterator();
-                    while (iterator.hasNext()) {
-                        Pic p = (Pic) iterator.next();
-
-                %>
-                <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
-
-                    }
-                    }
-                %>
-            </div>
+                <ul>
+                <a href="/Instagrim/Image/<%=pab.getAvatar().getSUUID()%>" ><img src="/Instagrim/Thumb/<%=pab.getAvatar().getSUUID()%>"></a><br/>
+                <p>Name: <%=pab.getFName()%> <%=pab.getSName()%></p>
+                <p>Email: <%=pab.getEmail()%></p>
+                </ul>
+            </div
         </article>
          <form id="profieUpload" method="POST" enctype="multipart/form-data" action="ProfileImage">
             <ul>
                 <li id="registerTabs" style="list-style: none">Profile Picture <input id="registerTabs2" type="file" name="upfile"></li>
                 <li id="registerTabs">Upload picture <input id="registerTabs2" type="submit" value="Press"></li>
             </ul>
-            
+                 <h1>Your Pics</h1>
+        <%
+            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
+            if (lsPics == null) {
+        %>
+        <p>No Pictures found</p>
+        <%
+        } else {
+            Iterator<Pic> iterator;
+            iterator = lsPics.iterator();
+            while (iterator.hasNext()) {
+                Pic p = (Pic) iterator.next();
+        %>
+        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+            }
+            }
+        %>
         </form>
     </body>
 </html>
