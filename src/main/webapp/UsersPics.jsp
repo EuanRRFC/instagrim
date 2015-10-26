@@ -1,7 +1,7 @@
 <%-- 
     Document   : UsersPics
     Created on : Sep 24, 2014, 2:52:48 PM
-    Author     : Administrator
+    Author     : Euan - Updated
 --%>
 
 <%@page import="java.util.*"%>
@@ -10,25 +10,34 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="/Instagrim/Bootstrap/bootstrap.css" />
+        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="/Instagrim/styles.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Instagrim</title>
-        <link rel="stylesheet" type="text/css" href="/Instagrim/Styles.css" />
+        <% LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        ProfileAvatarBean pab = (ProfileAvatarBean) session.getAttribute("ProfileAvatarBean");
+        session.setAttribute("username", lg.getUsername());%>
     </head>
     <body>
-        <header>
         
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
-        </header>
-        
-        <nav>
-            <ul>
-                <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
-        </nav>
+        <nav id="navbar" class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                     <ul id="tabs" class="nav nav-tabs">
+                         <li><a href="/Instagrim">Home</a></li>
+                         <li><a href="/Instagrim/upload.jsp">Upload</a></li>
+                         <li><a href="/Instagrim/updateProfile.jsp">Update Profile</a></li>
+                         <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
+                                 <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>   
+                                 
+                    </ul>
+                </div>
+       </nav>
  
         <article>
+            <p>Profile Picture</p>
+            <a href="/Instagrim/Image/<%=pab.getAvatar().getSUUID()%>" ><img src="/Instagrim/Thumb/<%=pab.getAvatar().getSUUID()%>"></a><br/>
+                <p>Name: <%=pab.getFName()%> <%=pab.getSName()%></p>
+                <p>Email: <%=pab.getEmail()%></p>
             <h1>Your Pics</h1>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
@@ -41,8 +50,11 @@
             iterator = lsPics.iterator();
             while (iterator.hasNext()) {
                 Pic p = (Pic) iterator.next();
+
         %>
+        
         <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+
             }
             }
         %>

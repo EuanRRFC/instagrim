@@ -33,7 +33,7 @@
                     %>
                 <!--If logged in then display these tabs instead-->
                 <!--<li role="presentation"><a href="/Instagrim/Images/<%=lg.getUsername()%>">Profile</a></li>-->
-                <li role="presentation"><a href="profile.jsp">Profile</a></li>
+                <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Profile</a></li>
                 <li role="presentation"><a href="upload.jsp">Upload</a></li>
                 <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">Logout</a></li>
                     <%}

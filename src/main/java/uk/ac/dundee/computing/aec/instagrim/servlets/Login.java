@@ -8,6 +8,7 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,7 +33,6 @@ public class Login extends HttpServlet {
     Cluster cluster=null;
 
 
-    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -47,7 +47,7 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String username=request.getParameter("username");
@@ -77,7 +77,9 @@ public class Login extends HttpServlet {
                 session.setAttribute("ProfileAvatarBean", pab);
                 session.setAttribute("Avatar", pab.getAvatar());
                 session.setAttribute("uploadProfile", null);
-                response.sendRedirect("/Instagrim");
+                RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+                rd.forward(request,response);
+                //response.sendRedirect("/Instagrim");
             }else{
                 response.sendRedirect("/Instagrim/login.jsp");
             }
@@ -93,4 +95,5 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

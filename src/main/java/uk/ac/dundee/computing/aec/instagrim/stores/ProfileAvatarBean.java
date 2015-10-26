@@ -48,6 +48,10 @@ public class ProfileAvatarBean {
         this.avatar=avatar;
     }
     
+    public void setPicList()
+    {
+        
+    }
     public String getFName()
     {
         return fName;

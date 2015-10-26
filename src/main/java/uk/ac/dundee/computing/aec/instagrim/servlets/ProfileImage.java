@@ -29,7 +29,7 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 /**
  * Servlet implementation class Image
  */
-@WebServlet(urlPatterns = {"/ProfileImage"})
+@WebServlet(urlPatterns = {"/ProfileImages"})
 @MultipartConfig
 
 public class ProfileImage extends HttpServlet {
@@ -81,19 +81,27 @@ public class ProfileImage extends HttpServlet {
         }
     }
 
-   protected void DisplayProfile(HttpServletRequest request, HttpServletResponse response)
+//   protected void DisplayProfile(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException
+//    {
+////        System.out.println("We're in display profile");
+//        PicModel tm = new PicModel();
+//        tm.setCluster(cluster);
+//        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
+//        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
+//        request.setAttribute("Pics", lsPics);
+//        rd.forward(request, response);
+//    }
+    
+     protected void DisplayProfile(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-//        System.out.println("We're in display profile");
-        PicModel tm = new PicModel();
-        tm.setCluster(cluster);
-        java.util.LinkedList<Pic> lsPics = tm.getProfilePicsForUser(User);
-        RequestDispatcher rd = request.getRequestDispatcher("Instagrim/profile.jsp");
-        request.setAttribute("Pics", lsPics);
+        RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");
         rd.forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Attempting to post to database");
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
 
@@ -105,11 +113,12 @@ public class ProfileImage extends HttpServlet {
             int i = is.available();
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";
+         
             if (lg.getlogedin()){
-                username=lg.getUsername();
+                String username=lg.getUsername();
             }
             if (i > 0) {
+                String username=lg.getUsername();
                 byte[] b = new byte[i + 1];
                 is.read(b);
                 System.out.println("Length : " + b.length);
@@ -120,7 +129,7 @@ public class ProfileImage extends HttpServlet {
                 
                 is.close();
             }
-             response.sendRedirect("/Instagrim/profile.jsp");
+             response.sendRedirect("/Instagrim/Images/" + lg.getUsername());
         }
 
     }

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : updateProfile
-    Created on : 23-Oct-2015, 13:49:24
+    Document   : allUsers
+    Created on : 25-Oct-2015, 19:02:06
     Author     : Euan
 --%>
 
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn"%>
 <%@page import="uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,29 +19,18 @@
         ProfileAvatarBean pab = (ProfileAvatarBean) session.getAttribute("ProfileAvatarBean");
         session.setAttribute("username", lg.getUsername());%>
     </head>
-    <body>
+   <body>
         <nav id="navbar" class="navbar navbar-default navbar-static-top">
                 <div class="container">
                      <ul id="tabs" class="nav nav-tabs">
                          <li><a href="/Instagrim">Home</a></li>
                          <li><a href="/Instagrim/upload.jsp">Upload</a></li>
-                         <!--<li role="presentation"><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>-->
                          <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
                                  <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>
                     </ul>
                 </div>
+            <p>${username}</p>
+            
        </nav>
     </body>
-    <article>
-         <form method="POST"  action="UpdateProfile">
-            <div id="profileInfo" class="container">
-                <h1>${username}</h1>
-                  Edit Profile
-                  <li id="registerTabs" style="list-style: none">Email <input id="registerTabs2" type="email" name="email"></li>
-                  <li id="registerTabs" style="list-style: none">First Name <input id="registerTabs2" type="fName" name="fName"></li>
-                  <li id="registerTabs" style="list-style: none">Last Name <input id="registerTabs2" type="sName" name="sName"></li>
-                  <button <input href="/Instagrim/Profile.jsp" type="submit" id="registerBtn" type="button" class="btn btn-default">Update</button>
-            </div>
-         </form>
-    </article>
 </html>

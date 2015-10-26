@@ -74,23 +74,20 @@ public class PicModel {
 
             PreparedStatement psInsertPic = session.prepare("insert into pics ( picid, image,thumb,processed, user, interaction_time,imagelength,thumblength,processedlength,type,name) values(?,?,?,?,?,?,?,?,?,?,?)");
             PreparedStatement psInsertPicToUser = session.prepare("insert into userpiclist ( picid, user, pic_added) values(?,?,?)");
-//            PreparedStatement psInsertProfilePic = session.prepare("insert into userpiclist(picid, user, pic_added, profilePic) values(?,?,?,?)");
             BoundStatement bsInsertPic = new BoundStatement(psInsertPic);
             BoundStatement bsInsertPicToUser = new BoundStatement(psInsertPicToUser);
-//            BoundStatement bsInsertProfilePic = new BoundStatement(psInsertProfilePic);
 
             Date DateAdded = new Date();
             session.execute(bsInsertPic.bind(picid, buffer, thumbbuf,processedbuf, user, DateAdded, length,thumblength,processedlength, type, name));
             session.execute(bsInsertPicToUser.bind(picid, user, DateAdded));
-//            session.execute(bsInsertProfilePic.bind(picid, user, DateAdded, picid));
             session.close();
 
         } catch (IOException ex) {
             System.out.println("Error --> " + ex);
         }
     }
-    
-     public void insertProfilePic(byte[] b, String type, String name, String user) {
+
+    public void insertProfilePic(byte[] b, String type, String name, String user) {
         try {
             Convertors convertor = new Convertors();
 
@@ -129,7 +126,7 @@ public class PicModel {
             System.out.println("Error --> " + ex);
         }
     }
-   
+    
     public byte[] picresize(String picid,String type) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
@@ -199,31 +196,7 @@ public class PicModel {
         }
         return Pics;
     }
-    public java.util.LinkedList<Pic> getProfilePicsForUser(String User) {
-        java.util.LinkedList<Pic> ProfilePics = new java.util.LinkedList<>();
-        Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("select profilePic from userprofiles where user =?");
-        ResultSet rs = null;
-        BoundStatement boundStatement = new BoundStatement(ps);
-        rs = session.execute( // this is where the query is executed
-                boundStatement.bind( // here you are binding the 'boundStatement'
-                        User));
-        if (rs.isExhausted()) {
-            System.out.println("No Profile pictures returned");
-            return null;
-        } else {
-            for (Row row : rs) {
-                Pic pic = new Pic();
-                java.util.UUID UUID = row.getUUID("profilePic");
-                System.out.println("UUID" + UUID.toString());
-                pic.setUUID(UUID);
-                ProfilePics.add(pic);
 
-            }
-        }
-        return ProfilePics;
-    }
-    
     public Pic getPic(int image_type, java.util.UUID picid) {
         Session session = cluster.connect("instagrim");
         ByteBuffer bImage = null;

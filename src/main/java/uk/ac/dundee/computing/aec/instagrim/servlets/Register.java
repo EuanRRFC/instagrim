@@ -16,10 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
-import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -27,11 +25,14 @@ import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
  */
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
-    Cluster cluster= null;
+    Cluster cluster=null;
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
     }
+
+
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -46,36 +47,13 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        String checkPassword=request.getParameter("password2");
-        String email=request.getParameter("email");
-        String fName=request.getParameter("fName");
-        String sName=request.getParameter("sName");
         
-            if (username.isEmpty() || password.isEmpty() || checkPassword.isEmpty() || email.isEmpty() || fName.isEmpty() || sName.isEmpty())
-        {
-            response.sendRedirect("register.jsp");
-        }else{
-                if (password.equals(checkPassword)){     // Check if passwords match or not
-           
-                    User us= new User();
-                us.setCluster(cluster);
-                boolean checkUN= us.RegisterUser(username, password, email, fName, sName);
-                if (checkUN){
-                    HttpSession session= request.getSession(); // Creates Http session to allow auto login
-                    LoggedIn lg= new LoggedIn();
-                    lg.setLogedin();
-                    lg.setUsername(username);
-                    session.setAttribute("LoggedIn", lg);
-                    response.sendRedirect("/Instagrim");
-                }else{
-
-                    response.sendRedirect("register.jsp");
-                }
-                }else{
-                    System.out.println("Passwords didn't match");
-                    response.sendRedirect("register.jsp");
-            }
-        }
+        User us=new User();
+        us.setCluster(cluster);
+        us.RegisterUser(username, password);
+        
+	response.sendRedirect("/Instagrim");
+        
     }
 
     /**

@@ -8,7 +8,7 @@
 <%@page import="uk.ac.dundee.computing.aec.instagrim.stores.Avatar"%>
 <%@page import="uk.ac.dundee.computing.aec.instagrim.stores.ProfileAvatarBean"%>
 <%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn" %>
-<%@page import="java.util.*" %>
+<%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,11 +30,10 @@
                          <li><a href="/Instagrim">Home</a></li>
                          <li><a href="/Instagrim/upload.jsp">Upload</a></li>
                          <li><a href="/Instagrim/updateProfile.jsp">Update Profile</a></li>
-                         <!--<li role="presentation"><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>-->
                          <li id="logBtn" role="presentation"><a href="/Instagrim/Logout">
                                  <span class="glyphicon glyphicon-logy" aria-hidden="true"></span>Logout</a></li>
-<!--                         <button <input type="submit" id="logBtn" type="button">
-                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"</span>Logout</button>-->
+
+                                   
                     </ul>
                 </div>
        </nav>
@@ -42,8 +41,6 @@
          <article>
             <div id="profileInfo" class="container">
             <h1>${username}</h1>
-            <h2>${fName}</h2>
-         
             </div>
             
             <article>
@@ -52,16 +49,7 @@
                 <a href="/Instagrim/Image/<%=pab.getAvatar().getSUUID()%>" ><img src="/Instagrim/Thumb/<%=pab.getAvatar().getSUUID()%>"></a><br/>
                 <p>Name: <%=pab.getFName()%> <%=pab.getSName()%></p>
                 <p>Email: <%=pab.getEmail()%></p>
-                </ul>
-            </div
-        </article>
-         <form id="profieUpload" method="POST" enctype="multipart/form-data" action="ProfileImage">
-            <ul>
-                <li id="registerTabs" style="list-style: none">Profile Picture <input id="registerTabs2" type="file" name="upfile"></li>
-                <li id="registerTabs">Upload picture <input id="registerTabs2" type="submit" value="Press"></li>
-            </ul>
-                 <h1>Your Pics</h1>
-        <%
+              <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
             if (lsPics == null) {
         %>
@@ -77,6 +65,14 @@
             }
             }
         %>
-        </form>
+                </ul>
+            </div>
+            <form id="profieUpload" method="POST" enctype="multipart/form-data" action="ProfileImage">
+                <ul>
+                    <li id="registerTabs" style="list-style: none">Profile Picture <input id="registerTabs2" type="file" name="upfile"></li>
+                    <li id="registerTabs">Upload picture <input id="registerTabs2" type="submit" value="Press"></li>
+                </ul>
+            </form>
+        </article>
     </body>
 </html>
